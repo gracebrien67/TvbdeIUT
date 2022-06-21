@@ -21,8 +21,6 @@ for case in content:
   instruction_summary = ""
   instructions = []
   for line in assembly_lines:
-    if not re.match("^L\d*:\s*$", line):
-      instructions.append(line.strip().split(" ")[0].upper().replace(".", ""))
   instruction_summary = "_".join(instructions)
 
   assembly_lines = "{{{}}}".format(", ".join(["\"{}\"".format(x.replace("\\n", "").strip()) for x in assembly_lines]))
@@ -49,6 +47,4 @@ with open("test-cases.cpp", "a") as f:
   for instr in instructions:
     f.write("TEST(DecompilerAtomicOpBuilder, {}) {{".format(instr))
     for case in test_cases[instr]:
-      f.write(case)
-    f.write("}\n\n")
 
